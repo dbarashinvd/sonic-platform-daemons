@@ -306,6 +306,7 @@ class DaemonYcable(daemon_base.DaemonBase):
 
         if multi_asic.is_multi_asic():
             # Load the namespace details first from the database_global.json file.
+            helper_logger.log_notice("calling init global config, is_multi_asic: {}".format(is_multi_asic()))
             swsscommon.SonicDBConfig.initializeGlobalConfig()
 
         # Load port info
