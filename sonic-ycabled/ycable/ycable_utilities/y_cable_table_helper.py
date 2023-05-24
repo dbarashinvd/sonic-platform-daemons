@@ -8,6 +8,15 @@ from sonic_py_common import daemon_base
 from sonic_py_common import multi_asic
 from swsscommon import swsscommon
 
+try:
+    from sonic_py_common.logger import Logger
+except ImportError as e:
+    raise ImportError (str(e) + "- required module not found")
+
+# Global logger class instance
+logger = Logger()
+
+
 MUX_CABLE_STATIC_INFO_TABLE = "MUX_CABLE_STATIC_INFO"
 MUX_CABLE_INFO_TABLE = "MUX_CABLE_INFO"
 TRANSCEIVER_STATUS_TABLE = 'TRANSCEIVER_STATUS'
@@ -250,6 +259,7 @@ class YcableTableUpdateTableHelper(object):
 
         if multi_asic.is_multi_asic():
             # Load the namespace details first from the database_global.json file.
+            logger.log_notice("cable_table_helper: calling init global config, is_multi_asic: {}".format(is_multi_asic()))
             swsscommon.SonicDBConfig.initializeGlobalConfig()
 
         namespaces = multi_asic.get_front_end_namespaces()
